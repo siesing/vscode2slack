@@ -1,26 +1,160 @@
 {
     "name": "vscode2slack",
     "displayName": "vscode2slack",
-    "description": "Extension for communcating with Slack",
+    "description": "Post messages, code, files etc. from VSCode to Slack.",
     "version": "0.0.1",
     "publisher": "siesing",
+    "author": {
+        "name": "Fredrik Siesing",
+        "email": "fredriksiesing@gmail.com",
+        "url": "https://github.com/siesing/"
+    },
     "engines": {
         "vscode": "^1.22.0"
     },
-    "categories": [
-        "Other"
-    ],
+    "categories": ["Other"],
+    "keywords": ["Slack", "chat", "communication", "collaboration"],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:slack.sendMessage",
+        "onCommand:slack.sendSelection",
+        "onCommand:slack.uploadFilePath",
+        "onCommand:slack.uploadOpenFile",
+        "onCommand:slack.uploadSelectedFile",
+        "onCommand:slack.setSnooze",
+        "onCommand:slack.endSnooze",
+        "onCommand:slack.dndInfo"
     ],
     "main": "./out/extension",
     "contributes": {
+        "menus": {
+            "commandPalette": [
+                {
+                    "when": "config.noExist",
+                    "command": "slack.uploadSelectedFile"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "when": "!explorerResourceIsRoot && !explorerResourceIsFolder",
+                    "command": "slack.uploadSelectedFile",
+                    "group": "navigation"
+                }
+            ],
+            "editor/context": [
+                {
+                    "when": "editorHasSelection",
+                    "command": "slack.sendSelection",
+                    "group": "navigation"
+                },
+                {
+                    "when": "editorTextFocus",
+                    "command": "slack.uploadOpenFile",
+                    "group": "navigation"
+                }
+            ]
+        },
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "slack.sendMessage",
+                "title": "Post Message to Slack",
+                "category": "Slack"
+            },
+            {
+                "command": "slack.sendSelection",
+                "title": "Post Selection to Slack",
+                "category": "Slack"
+            },
+            {
+                "command": "slack.uploadOpenFile",
+                "title": "Upload the Open File to Slack",
+                "category": "Slack"
+            },
+            {
+                "command": "slack.uploadSelectedFile",
+                "title": "Upload Selected File to Slack",
+                "category": "Slack"
+            },
+            {
+                "command": "slack.setSnooze",
+                "title": "Set/Change Snooze duration",
+                "category": "Slack"
+            },
+            {
+                "command": "slack.endSnooze",
+                "title": "End Snooze",
+                "category": "Slack"
+            },
+            {
+                "command": "slack.dndInfo",
+                "title": "Check Snooze Status",
+                "category": "Slack"
             }
-        ]
+        ],
+        "keybindings": [
+            {
+                "command": "slack.sendMessage",
+                "key": "ctrl+win+n",
+                "mac": "ctrl+cmd+n"
+            },
+            {
+                "when": "editorHasSelection",
+                "command": "slack.sendSelection",
+                "key": "ctrl+win+w",
+                "mac": "ctrl+cmd+w"
+            },
+            {
+                "when": "editorTextFocus",
+                "command": "slack.uploadOpenFile",
+                "key": "ctrl+win+u",
+                "mac": "ctrl+cmd+u"
+            },
+            {
+                "when": "explorerViewletFocus && explorerViewletVisible && !inputFocus",
+                "command": "slack.uploadSelectedFile",
+                "key": "ctrl+win+p",
+                "mac": "ctrl+cmd+s"
+            },
+            {
+                "command": "slack.setSnooze",
+                "key": "ctrl+win+z",
+                "mac": "ctrl+cmd+z"
+            },
+            {
+                "command": "slack.endSnooze",
+                "key": "ctrl+win+e",
+                "mac": "ctrl+cmd+e"
+            },
+            {
+                "command": "slack.dndInfo",
+                "key": "ctrl+win+d",
+                "mac": "ctrl+cmd+d"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "VSCode2Slack configuration",
+            "properties": {
+                "slack.token": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Your Slack team token.",
+                    "scope": "window"
+                },
+                "slack.sendAsUser": {
+                    "type": "string",
+                    "enum": ["true", "false"],
+                    "default": "true",
+                    "description": "If set to true messages will be sent as yourself; otherwise they will be sent as a Bot.",
+                    "scope": "window"
+                },
+                "slack.actionNotificationDisplayTime": {
+                    "type": "integer",
+                    "default": 5000,
+                    "description": "Action notification display time in ms. Default is 5000ms (i.e. 5 sec).",
+                    "scope": "window"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -35,5 +169,11 @@
         "tslint": "^5.8.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "file-system": "^2.2.2",
+        "form-data": "^2.3.1",
+        "moment": "^2.22.0",
+        "superagent": "^3.8.2"
     }
 }
