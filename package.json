@@ -1,6 +1,6 @@
 {
     "name": "vscode2slack",
-    "displayName": "vscode2slack",
+    "displayName": "VSCode2Slack",
     "description": "Post messages, code, files etc. from VSCode to Slack.",
     "version": "0.0.1",
     "publisher": "siesing",
