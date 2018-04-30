@@ -3,7 +3,7 @@
     "displayName": "VSCode 2 Slack",
     "icon": "images/logo.png",
     "description": "Post messages, code, files etc. from VSCode to Slack.",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "publisher": "siesing",
     "author": {
         "name": "Fredrik Siesing",
@@ -14,15 +14,8 @@
         "vscode": "^1.22.0"
     },
     "license": "SEE LICENSE IN LICENSE",
-    "categories": [
-        "Other"
-    ],
-    "keywords": [
-        "Slack",
-        "chat",
-        "communication",
-        "collaboration"
-    ],
+    "categories": ["Other"],
+    "keywords": ["Slack", "chat", "communication", "collaboration"],
     "homepage": "https://github.com/siesing/vscode2slack/blob/master/README.md",
     "repository": {
         "type": "git",
