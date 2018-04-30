@@ -1,65 +1,81 @@
-# vscode2slack README
+# VS Code 2 Slack - a more personal extension
 
-This is the README for your extension "vscode2slack". After writing up a brief description, we recommend including the following sections.
+Ever felt that you're in a flow and don't want to stop coding, but you need to send someone a message or turn off notifications to stay in that flow? Ever felt the need to ask a colleague/friend a question about a certain piece of code? Look no further we've got you covered!
+
+> **_Sends messages and files, as yourself including your user name and avatar, to users, channels and groups with full editing capabilities in Slack._**
+
+This extension is not created by, affiliated with, or supported by Slack Technologies, Inc or by Microsoft Corp.
+
+**Enjoy! :+1:**
+
+*   [Features](#features)
+*   [Installation](#installation)
+*   [Extension Settings](#extension-settings)
+*   [Keyboard Shortcuts](#keyboard-shortcuts)
+*   [Screenshots](#screenshots)
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Sends messages and files, as yourself including your user name and avatar, to users, channels and groups with full editing capabilities in Slack.
 
-For example if there is an image subfolder under your extension project workspace:
+#### Send Messages Based On:
 
-\!\[feature X\]\(images/feature-x.png\)
+*   User input.
+*   Text selection.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+#### Uplod Files:
 
-## Requirements
+*   Files from File Explorer.
+*   Current open file in editor.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+#### Notifications:
+
+*   Set new or change existing snooze time.
+*   End snoozing of notifications.
+*   Check the snooze status.
+
+## Installation
+
+Install by openening Visual Studio Code and press `Ctrl+Shift+X` or `Cmd+Shift+X` to open the Extensions pane.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Set your custom settings under User Settings `(File > Preferences > User Settings)` or by pressing `Ctrl+,` or `Cmd+,`.
 
-For example:
+```
+"slack.token": "<your token>",
+"slack.actionNotificationDisplayTime": <time in ms>
+```
 
-This extension contributes the following settings:
+Settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+*   `slack.token *(required)*` You find your token here [https://api.slack.com/custom-integrations/legacy-tokens](https://api.slack.com/custom-integrations/legacy-tokens "Get your Slack token.").
+*   `slack.actionNotificationDisplayTime` Notifications display time in ms. Default is **_5000_**, i.e. 5 sec.
 
-## Known Issues
+## Keyboard Shortcuts
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+| Action              | Windows  | Mac     |
+| ------------------- | -------- | ------- |
+| Send Message        | ctrl+u m | cmd+u m |
+| Send Selection      | ctrl+u s | cmd+u s |
+| Set/Change Snooze   | ctrl+u z | cmd+u z |
+| End Snooze          | ctrl+u e | cmd+u e |
+| Check Snooze Status | ctrl+u d | cmd+u d |
 
-## Release Notes
+## Screenshots
 
-Users appreciate release notes as you update your extension.
+Post a message.
 
-### 1.0.0
+![Usage](images/postmessage.gif)
 
-Initial release of ...
+Post a selection.
 
-### 1.0.1
+![Usage](images/postselection.gif)
 
-Fixed issue #.
+Post file from File Explorer.
 
-### 1.1.0
+![Usage](images/postfile.gif)
 
-Added features X, Y, and Z.
+Set and check snooze.
 
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+![Usage](images/snoozeset.gif)
