@@ -1,4 +1,4 @@
-# VS Code 2 Slack - a more personal extension
+# VSCode 2 Slack - a more personal extension
 
 Ever felt that you're in a flow and don't want to stop coding, but you need to send someone a message or turn off notifications to stay in that flow? Ever felt the need to ask a colleague/friend a question about a certain piece of code? Look no further we've got you covered!
 
