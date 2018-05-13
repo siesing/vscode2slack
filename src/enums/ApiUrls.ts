@@ -6,5 +6,6 @@ export enum ApiUrls {
     UploadFiles = "files.upload",
     SetSnooze = "dnd.setSnooze",
     EndSnooze = "dnd.endSnooze",
-    DndInfo = "dnd.info"
+    DndInfo = "dnd.info",
+    TeamInfo = "team.info"
 }

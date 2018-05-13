@@ -14,15 +14,8 @@
         "vscode": "^1.22.0"
     },
     "license": "SEE LICENSE IN LICENSE",
-    "categories": [
-        "Other"
-    ],
-    "keywords": [
-        "Slack",
-        "chat",
-        "communication",
-        "collaboration"
-    ],
+    "categories": ["Other"],
+    "keywords": ["Slack", "chat", "communication", "collaboration"],
     "homepage": "https://github.com/siesing/vscode2slack/blob/master/README.md",
     "repository": {
         "type": "git",
@@ -143,13 +136,20 @@
                 "slack.token": {
                     "type": "string",
                     "default": "",
-                    "description": "Your Slack team token.",
+                    "description": "DEPRECATED. See README. Your Slack team token.",
                     "scope": "window"
                 },
                 "slack.actionNotificationDisplayTime": {
                     "type": "integer",
                     "default": 5000,
                     "description": "Action notification display time in ms. Default is 5000ms (i.e. 5 sec).",
+                    "scope": "window"
+                },
+                "slack.workspaces": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "default": [],
+                    "description": "Your Slack workspace(s) settings. Array of objects. E.g. { 'token':'token1' }, {'token':'token2'}",
                     "scope": "window"
                 }
             }

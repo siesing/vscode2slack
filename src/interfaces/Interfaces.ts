@@ -32,3 +32,21 @@ export interface UsersResponse extends Result {
     cache_ts: number;
     responseMetadata: object;
 }
+
+export interface Team {
+    id: string;
+    label: string;
+    description: string;
+    token: string;
+}
+
+export interface TeamsResponse extends Result {
+    team: {
+        id: string;
+        name: string;
+        domain: string;
+    };
+}
+export interface Workspace {
+    token: string;
+}

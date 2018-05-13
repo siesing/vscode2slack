@@ -2,7 +2,7 @@
 import { workspace, window } from "vscode";
 import { ApiUrls } from "./enums/ApiUrls";
 import { ApiService } from "./ApiService";
-import { Result } from "./interfaces/Interfaces";
+import { Result, Workspace } from "./interfaces/Interfaces";
 import { Messages } from "./enums/Messages";
 import { SetStatusBarMessage } from "./SetStatusBarMessage";
 import * as fs from "fs";
@@ -11,21 +11,25 @@ export class Slack {
     private api: ApiService;
     private status: SetStatusBarMessage;
     private token: string;
+    private workspaces: Workspace[];
 
     public async sendMessage(): Promise<void> {
         if (!this.isTokenPresent()) {
             return;
         }
 
-        window.showInputBox({ prompt: Messages.PromptMessage }).then(message => {
+        window.showInputBox({ prompt: Messages.PromptMessage }).then(async message => {
             if (message) {
                 if (message.length > 40000) {
                     this.status.setInfoMessage(Messages.MessageTooLong);
                     return;
                 }
 
-                const data = { text: message };
-                this.pickChannel(ApiUrls.PostText, data);
+                const data = {
+                    text: message,
+                    token: await this.getToken()
+                };
+                this.chooseAction(ApiUrls.PostText, data);
             }
         });
     }
@@ -49,8 +53,11 @@ export class Slack {
                 return;
             }
 
-            const data = { text: selectedText };
-            this.pickChannel(ApiUrls.PostText, data);
+            const data = {
+                text: selectedText,
+                token: await this.getToken()
+            };
+            this.chooseAction(ApiUrls.PostText, data);
         } else {
             this.status.setInfoMessage(Messages.InfoNoTextSelected);
         }
@@ -69,10 +76,10 @@ export class Slack {
 
                 const data = {
                     num_minutes: minutes,
-                    token: this.token
+                    token: await this.getToken()
                 };
 
-                this.status.setStatusMessage(ApiUrls.SetSnooze, await this.api.snooze(ApiUrls.SetSnooze, data));
+                this.chooseAction(ApiUrls.SetSnooze, data);
             } else {
                 this.status.setInfoMessage(Messages.InfoSnooze);
             }
@@ -83,20 +90,22 @@ export class Slack {
         if (!this.isTokenPresent()) {
             return;
         }
-        this.status.setStatusMessage(ApiUrls.EndSnooze, await this.api.snooze(ApiUrls.EndSnooze, { token: this.token }));
+        this.chooseAction(ApiUrls.EndSnooze, { token: await this.getToken() });
     }
 
-    public async dndInfo(): Promise<void> {
+    public async dndInfo() {
         if (!this.isTokenPresent()) {
             return;
         }
-        this.status.setStatusMessage(ApiUrls.DndInfo, await this.api.snooze(ApiUrls.DndInfo, { token: this.token }));
+
+        this.chooseAction(ApiUrls.DndInfo, { token: await this.getToken() });
     }
 
     public async uploadSelectedFile(uri): Promise<void> {
         if (!this.isTokenPresent()) {
             return;
         }
+
         this.postFile(uri.fsPath);
     }
 
@@ -110,6 +119,7 @@ export class Slack {
     public updateSettings(): void {
         const config = workspace.getConfiguration("slack");
         this.token = config.get("token");
+        this.workspaces = config.get("workspaces");
 
         if (this.isTokenPresent()) {
             const actionNotificationDisplayTime: number = config.get("actionNotificationDisplayTime", 5000);
@@ -124,13 +134,39 @@ export class Slack {
         }
     }
 
+    private async getToken(): Promise<string> {
+        let token: string = "";
+
+        if (this.token) {
+            token = this.token;
+        } else if (this.workspaces.length === 1) {
+            token = this.workspaces[0].token;
+        } else {
+            await window.showQuickPick(await this.api.getTeams(this.workspaces)).then(team => {
+                if (!team) {
+                    return;
+                }
+
+                token = team.token;
+            });
+        }
+        return token;
+    }
+
+    private async chooseAction(apiUrl: ApiUrls, data: any): Promise<void> {
+        if (apiUrl === ApiUrls.PostText || apiUrl === ApiUrls.UploadFiles) {
+            this.pickChannel(apiUrl, data);
+        } else {
+            this.post(apiUrl, data);
+        }
+    }
+
     private async pickChannel(apiUrl: ApiUrls, data: any): Promise<void> {
-        window.showQuickPick(await this.api.getChannelList({ token: this.token })).then(channel => {
+        window.showQuickPick(await this.api.getChannelList({ token: data.token })).then(channel => {
             if (!channel) {
                 return;
             }
 
-            data["token"] = this.token;
             data["as_user"] = "true";
             data["channel"] = channel.id;
 
@@ -147,7 +183,17 @@ export class Slack {
             case ApiUrls.PostText:
                 result = await this.api.postText(apiUrl, data);
                 break;
+            case ApiUrls.SetSnooze:
+                result = await this.api.snooze(ApiUrls.SetSnooze, data);
+                break;
+            case ApiUrls.EndSnooze:
+                result = await this.api.snooze(ApiUrls.EndSnooze, data);
+                break;
+            case ApiUrls.DndInfo:
+                result = await this.api.snooze(apiUrl, data);
+                break;
         }
+
         this.status.setStatusMessage(apiUrl, result);
     }
 
@@ -156,21 +202,23 @@ export class Slack {
             const fileName = filenameWithPath.substring(filenameWithPath.lastIndexOf("\\") + 1);
             const file = fs.createReadStream(filenameWithPath);
             const data = {
+                token: await this.getToken(),
                 filename: fileName,
                 file: file
             };
 
-            this.pickChannel(ApiUrls.UploadFiles, data);
+            this.chooseAction(ApiUrls.UploadFiles, data);
         } else {
             this.status.setInfoMessage(Messages.InfoFileEmpty);
         }
     }
 
     private isTokenPresent(): boolean {
-        if (!this.token) {
+        if (!this.token && this.workspaces.length < 1) {
             window.showErrorMessage(Messages.SlackToken);
             return false;
         }
+
         return true;
     }
 

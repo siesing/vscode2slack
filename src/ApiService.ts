@@ -1,4 +1,14 @@
-import { Conversation, ConversationsResponse, FileResponse, MessageResponse, SnoozeResponse, UsersResponse } from "./interfaces/Interfaces";
+import {
+    Conversation,
+    ConversationsResponse,
+    FileResponse,
+    MessageResponse,
+    SnoozeResponse,
+    UsersResponse,
+    TeamsResponse,
+    Team,
+    Workspace
+} from "./interfaces/Interfaces";
 import { ApiUrls } from "./enums/ApiUrls";
 import * as superagent from "superagent";
 
@@ -121,5 +131,48 @@ export class ApiService {
         }
 
         return channelList;
+    }
+
+    public async getTeams(workspaces: Workspace[]): Promise<Team[]> {
+        const teamsList: Team[] = [];
+        const tokens: string[] = workspaces.map(workspace => {
+            return workspace.token;
+        });
+
+        try {
+            const promises = [];
+            tokens.forEach(token => {
+                promises.push(
+                    superagent
+                        .get(ApiUrls.BaseUrl + ApiUrls.TeamInfo)
+                        .set("Content-Type", "application/x-www-form-urlencoded")
+                        .query({
+                            token: token
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                );
+            });
+
+            const result: any[] = await Promise.all(promises);
+
+            for (let i = 0; i < result.length; i++) {
+                const teamResponse: TeamsResponse = JSON.parse(result[i].text);
+
+                if (teamResponse.ok !== false) {
+                    teamsList.push({
+                        id: teamResponse.team.id,
+                        label: teamResponse.team.name,
+                        description: teamResponse.team.domain + ".slack.com",
+                        token: tokens[i]
+                    });
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+        return teamsList;
     }
 }

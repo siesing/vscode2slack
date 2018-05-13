@@ -4,6 +4,8 @@ Ever felt that you're in a flow and don't want to stop coding, but you need to s
 
 > **_Sends messages and files, as yourself including your user name and avatar, to users, channels and groups with full editing capabilities in Slack._**
 
+> **_Now with support for multiple Workspaces (Teams)!_**
+
 This extension is not created by, affiliated with, or supported by Slack Technologies, Inc or by Microsoft Corp.
 
 **Enjoy! :+1:**
@@ -17,6 +19,8 @@ This extension is not created by, affiliated with, or supported by Slack Technol
 ## Features
 
 Sends messages and files, as yourself including your user name and avatar, to users, channels and groups with full editing capabilities in Slack.
+
+#### Support for multiple workspaces
 
 #### Send Messages Based On:
 
@@ -36,21 +40,48 @@ Sends messages and files, as yourself including your user name and avatar, to us
 
 ## Installation
 
-Install by openening Visual Studio Code and press `Ctrl+Shift+X` or `Cmd+Shift+X` to open the Extensions pane.
+Install by openening Visual Studio Code and press `Ctrl+Shift+X` or `Cmd+Shift+X` to open the Extensions pane and search for vscode2slack.
 
 ## Extension Settings
 
 Set your custom settings under User Settings `(File > Preferences > User Settings)` or by pressing `Ctrl+,` or `Cmd+,`.
 
 ```
-"slack.token": "<your token>",
+"slack.workspaces: [{
+    "token": "<workspace token>"
+}],
 "slack.actionNotificationDisplayTime": <time in ms>
 ```
 
 Settings:
 
-*   `slack.token *(required)*` You find your token here [https://api.slack.com/custom-integrations/legacy-tokens](https://api.slack.com/custom-integrations/legacy-tokens "Get your Slack token.").
-*   `slack.actionNotificationDisplayTime` Notifications display time in ms. Default is **_5000_**, i.e. 5 sec.
+*   `slack.workspaces *(required)*`  
+    You find your token(s) here [https://api.slack.com/custom-integrations/legacy-tokens](https://api.slack.com/custom-integrations/legacy-tokens "Get your Slack token(s).").
+
+To use a single Slack workspace.
+
+```
+"slack.workspaces: [{
+    "token": "<workspace token>"
+}]
+```
+
+To use multiple Slack workspaces.
+
+```
+"slack.workspaces: [{
+    "token": "<workspace1 token>"
+},{
+    "token": "<workspace2 token>"
+},{
+    "token": "<workspace3 token>"
+}]
+```
+
+*   `slack.token *(DEPRECATED)*`  
+    Use the above slack.workspaces instead.
+*   `slack.actionNotificationDisplayTime`  
+    Notifications display time in ms. Default is **_5000_**, i.e. 5 sec.
 
 ## Keyboard Shortcuts
 
@@ -79,3 +110,7 @@ Post file from File Explorer.
 Set and check snooze.
 
 ![Usage](images/snoozeset.gif)
+
+If you've added multiple workspaces you get this additional selection where you choose the target for your action.
+
+![Usage](images/multiple_workspaces.png)

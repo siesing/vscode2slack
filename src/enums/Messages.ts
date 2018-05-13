@@ -14,5 +14,5 @@ export enum Messages {
     InfoNoTextSelected = "$(stop) No text is selected",
     PromptMessage = "Enter Message",
     PromptSnooze = "Snooze Slack for x Minutes. Max 1440 (i.e. 24h).",
-    SlackToken = "Please enter a Slack token to use this extension."
+    SlackToken = "Please enter Slack token(s) to use this extension."
 }
