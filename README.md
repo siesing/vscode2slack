@@ -40,7 +40,7 @@ Sends messages and files, as yourself including your user name and avatar, to us
 
 ## Installation
 
-Install by openening Visual Studio Code and press `Ctrl+Shift+X` or `Cmd+Shift+X` to open the Extensions pane and search for vscode2slack.
+Install by openening Visual Studio Code and press `Ctrl+Shift+X` or `Cmd+Shift+X` to open the Extensions pane and search for VSCode 2 Slack.
 
 ## Extension Settings
 
