@@ -1,3 +1,7 @@
+[![](https://vsmarketplacebadge.apphb.com/version/siesing.vscode2slack.svg)](https://marketplace.visualstudio.com/items?itemName=siesing.vscode2slack)
+[![](https://vsmarketplacebadge.apphb.com/installs-short/siesing.vscode2slack.svg)](https://marketplace.visualstudio.com/items?itemName=siesing.vscode2slack)
+[![](https://vsmarketplacebadge.apphb.com/rating-short/siesing.vscode2slack.svg)](https://marketplace.visualstudio.com/items?itemName=siesing.vscode2slack)
+
 # VSCode 2 Slack - a more personal extension
 
 Ever felt that you're in a flow and don't want to stop coding, but you need to send someone a message or turn off notifications to stay in that flow? Ever felt the need to ask a colleague/friend a question about a certain piece of code? Look no further we've got you covered!

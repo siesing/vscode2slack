@@ -138,23 +138,19 @@ export class ApiService {
         const tokens: string[] = workspaces.map(workspace => {
             return workspace.token;
         });
+        const promises: any[] = tokens.map(token => {
+            return superagent
+                .get(ApiUrls.BaseUrl + ApiUrls.TeamInfo)
+                .set("Content-Type", "application/x-www-form-urlencoded")
+                .query({
+                    token: token
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        });
 
         try {
-            const promises = [];
-            tokens.forEach(token => {
-                promises.push(
-                    superagent
-                        .get(ApiUrls.BaseUrl + ApiUrls.TeamInfo)
-                        .set("Content-Type", "application/x-www-form-urlencoded")
-                        .query({
-                            token: token
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        })
-                );
-            });
-
             const result: any[] = await Promise.all(promises);
 
             for (let i = 0; i < result.length; i++) {
