@@ -6,11 +6,9 @@
 
 Ever felt that you're in a flow and don't want to stop coding, but you need to send someone a message or turn off notifications to stay in that flow? Ever felt the need to ask a colleague/friend a question about a certain piece of code? Look no further we've got you covered!
 
-> **_Sends messages and files, as yourself including your user name and avatar, to users, channels and groups with full editing capabilities in Slack._**
+> **_Sends messages and files like yourself, including your username and avatar, to users, channels, and groups with full editing capabilities in Slack._**
 
-> **_Now with support for multiple Workspaces (Teams)!_**
-
-This extension is not created by, affiliated with, or supported by Slack Technologies, Inc or by Microsoft Corp.
+> **_Support for multiple Workspaces._**
 
 **Enjoy! :+1:**
 
@@ -22,9 +20,15 @@ This extension is not created by, affiliated with, or supported by Slack Technol
 
 ## Features
 
-Sends messages and files, as yourself including your user name and avatar, to users, channels and groups with full editing capabilities in Slack.
+### Key Features
 
-#### Support for multiple workspaces
+*   Send messages and files to users, channels, and groups like yourself, including your username and avatar.
+
+*   Looks like and behaves like regular Slack messages.
+
+*   Full editing capabilities in Slack of sent messages and files.
+
+*   Support for multiple Workspaces.
 
 #### Send Messages Based On:
 
@@ -38,7 +42,7 @@ Sends messages and files, as yourself including your user name and avatar, to us
 
 #### Notifications:
 
-*   Set new or change existing snooze time.
+*   Set new or change existing snooze time of notifications.
 *   End snoozing of notifications.
 *   Check the snooze status.
 
@@ -51,7 +55,7 @@ Install by openening Visual Studio Code and press `Ctrl+Shift+X` or `Cmd+Shift+X
 Set your custom settings under User Settings `(File > Preferences > User Settings)` or by pressing `Ctrl+,` or `Cmd+,`.
 
 ```
-"slack.workspaces: [{
+"slack.workspaces": [{
     "token": "<workspace token>"
 }],
 "slack.actionNotificationDisplayTime": <time in ms>
@@ -65,7 +69,7 @@ Settings:
 To use a single Slack workspace.
 
 ```
-"slack.workspaces: [{
+"slack.workspaces": [{
     "token": "<workspace token>"
 }]
 ```
@@ -73,7 +77,7 @@ To use a single Slack workspace.
 To use multiple Slack workspaces.
 
 ```
-"slack.workspaces: [{
+"slack.workspaces": [{
     "token": "<workspace1 token>"
 },{
     "token": "<workspace2 token>"
@@ -115,6 +119,6 @@ Set and check snooze.
 
 ![Usage](images/snoozeset.gif)
 
-If you've added multiple workspaces you get this additional selection where you choose the target for your action.
+If you've added multiple workspaces you'll get this additional selection where you choose the workspace.
 
 ![Usage](images/multiple_workspaces.png)
