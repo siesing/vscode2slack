@@ -18,7 +18,7 @@ export class Slack {
             return;
         }
 
-        window.showInputBox({ prompt: Messages.PromptMessage }).then(async message => {
+        window.showInputBox({ placeHolder: Messages.MessagePlaceHolder }).then(async message => {
             if (message) {
                 if (message.length > 40000) {
                     this.status.setInfoMessage(Messages.MessageTooLong);
@@ -68,7 +68,7 @@ export class Slack {
             return;
         }
 
-        window.showInputBox({ prompt: Messages.PromptSnooze }).then(async minutes => {
+        window.showInputBox({ placeHolder: Messages.SnoozePlaceHolder }).then(async minutes => {
             if (Number(minutes)) {
                 if (Number(minutes) > 1440) {
                     return;
@@ -142,13 +142,18 @@ export class Slack {
         } else if (this.workspaces.length === 1) {
             token = this.workspaces[0].token;
         } else {
-            await window.showQuickPick(await this.api.getTeams(this.workspaces)).then(team => {
-                if (!team) {
-                    return;
-                }
+            await window
+                .showQuickPick(await this.api.getTeams(this.workspaces), {
+                    matchOnDescription: true,
+                    placeHolder: Messages.SelectWorkspacePlaceHolder
+                })
+                .then(team => {
+                    if (!team) {
+                        return;
+                    }
 
-                token = team.token;
-            });
+                    token = team.token;
+                });
         }
         return token;
     }
@@ -162,16 +167,21 @@ export class Slack {
     }
 
     private async pickChannel(apiUrl: ApiUrls, data: any): Promise<void> {
-        window.showQuickPick(await this.api.getChannelList({ token: data.token })).then(channel => {
-            if (!channel) {
-                return;
-            }
+        window
+            .showQuickPick(await this.api.getChannelList({ token: data.token }), {
+                matchOnDescription: true,
+                placeHolder: Messages.SelectChannelPlaceHolder
+            })
+            .then(channel => {
+                if (!channel) {
+                    return;
+                }
 
-            data["as_user"] = "true";
-            data["channel"] = channel.id;
+                data["as_user"] = "true";
+                data["channel"] = channel.id;
 
-            this.post(apiUrl, data);
-        });
+                this.post(apiUrl, data);
+            });
     }
 
     private async post(apiUrl: ApiUrls, data: any): Promise<void> {
@@ -215,7 +225,7 @@ export class Slack {
 
     private isTokenPresent(): boolean {
         if (!this.token && this.workspaces.length < 1) {
-            window.showErrorMessage(Messages.SlackToken);
+            window.showErrorMessage(Messages.SlackTokenError);
             return false;
         }
 

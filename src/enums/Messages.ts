@@ -12,7 +12,9 @@ export enum Messages {
     MessageTooLong = "$(stop) The message text is too long (Max 40.000 characters).",
     InfoFileEmpty = "$(stop) The file is empty.",
     InfoNoTextSelected = "$(stop) No text is selected",
-    PromptMessage = "Enter Message",
-    PromptSnooze = "Snooze Slack for x Minutes. Max 1440 (i.e. 24h).",
-    SlackToken = "Please enter Slack token(s) to use this extension."
+    MessagePlaceHolder = "Enter Message",
+    SnoozePlaceHolder = "Snooze Slack for x Minutes. Max is 1440 (i.e. 24h).",
+    SlackTokenError = "Please enter Slack token(s) to use this extension.",
+    SelectChannelPlaceHolder = "Select #channel, #group or @user",
+    SelectWorkspacePlaceHolder = "Select a Workspace"
 }
