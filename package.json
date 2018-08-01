@@ -158,6 +158,20 @@
                     "default": [],
                     "description": "Your Slack workspace(s) settings. Array of objects. E.g. { 'token':'token1' }, {'token':'token2'}",
                     "scope": "window"
+                },
+                "slack.includedUsers": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "default": [],
+                    "description": "Your Slack workspace(s) settings. Array of objects. E.g. { 'token':'token1' }, {'token':'token2'}",
+                    "scope": "window"
+                },
+                "slack.includedChannels": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "default": [],
+                    "description": "Your Slack workspace(s) settings. Array of objects. E.g. { 'token':'token1' }, {'token':'token2'}",
+                    "scope": "window"
                 }
             }
         }

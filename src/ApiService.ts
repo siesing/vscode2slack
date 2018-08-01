@@ -103,8 +103,11 @@ export class ApiService {
                 //Sort the public and private channels from a-z
                 const regularChannels: any[] = conversations.channels
                     .filter(x => x.is_group === false)
+                    .filter(x => data.includedChannels.indexOf(x.name) > -1)
                     .sort((a, b) => a.name.localeCompare(b.name));
-                const npims: any[] = conversations.channels.filter(x => x.is_group === true);
+                const npims: any[] = conversations.channels
+                    .filter(x => x.is_group === true)
+                    .filter(x => data.includedChannels.indexOf(x.name) > -1);
                 const sortedChannels = regularChannels.concat(npims);
 
                 sortedChannels.forEach(channel => {
@@ -119,11 +122,13 @@ export class ApiService {
             if (users.ok !== false && users.members.length > 0) {
                 const notDeactivatedUsers: any[] = users.members.filter(user => user.deleted !== true);
                 notDeactivatedUsers.forEach(user => {
-                    channelList.push({
-                        id: user.id,
-                        label: `@${user.profile.display_name}`,
-                        description: user.profile.real_name
-                    });
+                    if(data.includedUsers.indexOf(user.name) > -1) {
+                        channelList.push({
+                            id: user.id,
+                            label: `@${user.profile.display_name}`,
+                            description: user.profile.real_name
+                        });
+                    }
                 });
             }
         } catch (error) {

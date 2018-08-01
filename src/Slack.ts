@@ -12,6 +12,8 @@ export class Slack {
     private status: SetStatusBarMessage;
     private token: string;
     private workspaces: Workspace[];
+    private includedChannels: String[];
+    private includedUsers: String[];
 
     public async sendMessage(): Promise<void> {
         if (!this.isTokenPresent()) {
@@ -120,6 +122,8 @@ export class Slack {
         const config = workspace.getConfiguration("slack");
         this.token = config.get("token");
         this.workspaces = config.get("workspaces");
+        this.includedChannels = config.get("includedChannels");
+        this.includedUsers = config.get("includedUsers");
 
         if (this.isTokenPresent()) {
             const actionNotificationDisplayTime: number = config.get("actionNotificationDisplayTime", 5000);
@@ -167,8 +171,9 @@ export class Slack {
     }
 
     private async pickChannel(apiUrl: ApiUrls, data: any): Promise<void> {
+        console.log(this.includedChannels);  
         window
-            .showQuickPick(await this.api.getChannelList({ token: data.token }), {
+            .showQuickPick(await this.api.getChannelList({ token: data.token, includedChannels: this.includedChannels, includedUsers: this.includedUsers }), {
                 matchOnDescription: true,
                 placeHolder: Messages.SelectChannelPlaceHolder
             })
