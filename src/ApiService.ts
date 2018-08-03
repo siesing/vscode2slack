@@ -103,11 +103,11 @@ export class ApiService {
                 //Sort the public and private channels from a-z
                 const regularChannels: any[] = conversations.channels
                     .filter(x => x.is_group === false)
-                    .filter(x => data.includedChannels.indexOf(x.name) > -1)
+                    .filter(x => typeof data.includedChannels === 'undefined' || data.includedChannels.indexOf(x.name) > -1)
                     .sort((a, b) => a.name.localeCompare(b.name));
                 const npims: any[] = conversations.channels
                     .filter(x => x.is_group === true)
-                    .filter(x => data.includedChannels.indexOf(x.name) > -1);
+                    .filter(x => typeof data.includedChannels === 'undefined' || data.includedChannels.indexOf(x.name) > -1);
                 const sortedChannels = regularChannels.concat(npims);
 
                 sortedChannels.forEach(channel => {
@@ -122,7 +122,7 @@ export class ApiService {
             if (users.ok !== false && users.members.length > 0) {
                 const notDeactivatedUsers: any[] = users.members.filter(user => user.deleted !== true);
                 notDeactivatedUsers.forEach(user => {
-                    if(data.includedUsers.indexOf(user.name) > -1) {
+                    if(typeof data.includedUsers === 'undefined' || data.includedUsers.indexOf(user.name) > -1) {
                         channelList.push({
                             id: user.id,
                             label: `@${user.profile.display_name}`,
@@ -166,7 +166,7 @@ export class ApiService {
                         id: teamResponse.team.id,
                         label: teamResponse.team.name,
                         description: teamResponse.team.domain + ".slack.com",
-                        token: tokens[i]
+                        workspace: workspaces[i]
                     });
                 }
             }

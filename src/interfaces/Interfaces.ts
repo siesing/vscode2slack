@@ -37,7 +37,7 @@ export interface Team {
     id: string;
     label: string;
     description: string;
-    token: string;
+    workspace: Workspace;
 }
 
 export interface TeamsResponse extends Result {
@@ -49,4 +49,6 @@ export interface TeamsResponse extends Result {
 }
 export interface Workspace {
     token: string;
+    includedChannels: Array<string>;
+    includedUsers: Array<string>;
 }

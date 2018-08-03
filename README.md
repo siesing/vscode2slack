@@ -86,6 +86,22 @@ To use multiple Slack workspaces.
 }]
 ```
 
+To enable a specific list of channels or users.
+
+```
+"slack.workspaces": [{
+    "token": "<workspace 1 token>",
+    "includedUsers": [
+        "userName1",
+        "userName2"
+    ],
+    "includedChannels": [
+        "channelName1",
+        "channelName2"
+    ]
+}]
+```
+
 *   `slack.token *(DEPRECATED)*`  
     Use the above slack.workspaces instead.
 *   `slack.actionNotificationDisplayTime`  
