@@ -10,41 +10,42 @@ Ever felt that you're in a flow and don't want to stop coding, but you need to s
 
 > **_Support for multiple Workspaces._**
 
-**Enjoy! :+1:**
+**Enjoy! 👍**
 
-*   [Features](#features)
-*   [Installation](#installation)
-*   [Extension Settings](#extension-settings)
-*   [Keyboard Shortcuts](#keyboard-shortcuts)
-*   [Screenshots](#screenshots)
+- [Features](#features)
+- [Installation](#installation)
+- [Extension Settings](#extension-settings)
+- [Keyboard Shortcuts](#keyboard-shortcuts)
+- [Screenshots](#screenshots)
+- [Contributors](#contributors)
 
 ## Features
 
 ### Key Features
 
-*   Send messages and files to users, channels, and groups like yourself, including your username and avatar.
+- Send messages and files to users, channels, and groups like yourself, including your username and avatar.
 
-*   Looks like and behaves like regular Slack messages.
+- Looks like and behaves like regular Slack messages.
 
-*   Full editing capabilities in Slack of sent messages and files.
+- Full editing capabilities in Slack of sent messages and files.
 
-*   Support for multiple Workspaces.
+- Support for multiple Workspaces.
 
 #### Send Messages Based On:
 
-*   User input.
-*   Text selection.
+- User input.
+- Text selection.
 
 #### Uplod Files:
 
-*   Files from File Explorer.
-*   Current open file in editor.
+- Files from File Explorer.
+- Current open file in editor.
 
 #### Notifications:
 
-*   Set new or change existing snooze time of notifications.
-*   End snoozing of notifications.
-*   Check the snooze status.
+- Set new or change existing snooze time of notifications.
+- End snoozing of notifications.
+- Check the snooze status.
 
 ## Installation
 
@@ -63,8 +64,8 @@ Set your custom settings under User Settings `(File > Preferences > User Setting
 
 Settings:
 
-*   `slack.workspaces *(required)*`  
-    You find your token(s) here [https://api.slack.com/custom-integrations/legacy-tokens](https://api.slack.com/custom-integrations/legacy-tokens "Get your Slack token(s).").
+- `slack.workspaces *(required)*`  
+  You find your token(s) here [https://api.slack.com/custom-integrations/legacy-tokens](https://api.slack.com/custom-integrations/legacy-tokens "Get your Slack token(s).").
 
 To use a single Slack workspace.
 
@@ -78,11 +79,11 @@ To use multiple Slack workspaces.
 
 ```
 "slack.workspaces": [{
-    "token": "<workspace1 token>"
+    "token": "<workspace 1 token>"
 },{
-    "token": "<workspace2 token>"
+    "token": "<workspace 2 token>"
 },{
-    "token": "<workspace3 token>"
+    "token": "<workspace 3 token>"
 }]
 ```
 
@@ -92,20 +93,20 @@ To enable a specific list of channels or users.
 "slack.workspaces": [{
     "token": "<workspace 1 token>",
     "includedUsers": [
-        "userName1",
-        "userName2"
+        "<user name 1>",
+        "<user name 2>"
     ],
     "includedChannels": [
-        "channelName1",
-        "channelName2"
+        "<channel name 1>",
+        "<channel name 2>"
     ]
 }]
 ```
 
-*   `slack.token *(DEPRECATED)*`  
-    Use the above slack.workspaces instead.
-*   `slack.actionNotificationDisplayTime`  
-    Notifications display time in ms. Default is **_5000_**, i.e. 5 sec.
+- `slack.token *(DEPRECATED)*`  
+  Use the above slack.workspaces instead.
+- `slack.actionNotificationDisplayTime`  
+  Notifications display time in ms. Default is **_5000_**, i.e. 5 sec.
 
 ## Keyboard Shortcuts
 
@@ -138,3 +139,9 @@ Set and check snooze.
 If you've added multiple workspaces you'll get this additional selection where you choose the workspace.
 
 ![Usage](images/multiple_workspaces.png)
+
+## Contributors
+
+A big thanks to:
+
+- Ray McClain ([@ReiMcCl](https://github.com/ReiMcCl))
