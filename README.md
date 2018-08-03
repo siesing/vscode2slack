@@ -142,6 +142,6 @@ If you've added multiple workspaces you'll get this additional selection where y
 
 ## Contributors
 
-A big thanks to:
+A big thanks 🙏&#x2764; to:
 
 - Ray McClain ([@ReiMcCl](https://github.com/ReiMcCl))
