@@ -156,7 +156,7 @@
                     "type": "array",
                     "uniqueItems": true,
                     "default": [],
-                    "description": "Your Slack workspace(s) settings. Array of objects. E.g. { 'token':'token1' }, {'token':'token2'}",
+                    "description": "Your Slack workspace(s) settings. Array of objects. E.g. { 'token':'token1', 'includedUsers': ['userName'], 'includedChannels': ['channelName'] }, {'token':'token2', , 'includedUsers': ['userName'], 'includedChannels': ['channelName']}",
                     "scope": "window"
                 }
             }

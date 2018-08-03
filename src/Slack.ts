@@ -12,6 +12,9 @@ export class Slack {
     private status: SetStatusBarMessage;
     private token: string;
     private workspaces: Workspace[];
+    private workspace: Workspace;
+    private includedChannels: String[];
+    private includedUsers: String[];
 
     public async sendMessage(): Promise<void> {
         if (!this.isTokenPresent()) {
@@ -27,7 +30,7 @@ export class Slack {
 
                 const data = {
                     text: message,
-                    token: await this.getToken()
+                    ...await this.getWorkspace()
                 };
                 this.chooseAction(ApiUrls.PostText, data);
             }
@@ -55,7 +58,7 @@ export class Slack {
 
             const data = {
                 text: selectedText,
-                token: await this.getToken()
+                ...await this.getWorkspace()
             };
             this.chooseAction(ApiUrls.PostText, data);
         } else {
@@ -76,7 +79,7 @@ export class Slack {
 
                 const data = {
                     num_minutes: minutes,
-                    token: await this.getToken()
+                    ...await this.getWorkspace()
                 };
 
                 this.chooseAction(ApiUrls.SetSnooze, data);
@@ -90,7 +93,7 @@ export class Slack {
         if (!this.isTokenPresent()) {
             return;
         }
-        this.chooseAction(ApiUrls.EndSnooze, { token: await this.getToken() });
+        this.chooseAction(ApiUrls.EndSnooze, await this.getWorkspace());
     }
 
     public async dndInfo() {
@@ -98,7 +101,7 @@ export class Slack {
             return;
         }
 
-        this.chooseAction(ApiUrls.DndInfo, { token: await this.getToken() });
+        this.chooseAction(ApiUrls.DndInfo, await this.getWorkspace());
     }
 
     public async uploadSelectedFile(uri): Promise<void> {
@@ -119,6 +122,7 @@ export class Slack {
     public updateSettings(): void {
         const config = workspace.getConfiguration("slack");
         this.token = config.get("token");
+        this.workspace = config.get("workspace");
         this.workspaces = config.get("workspaces");
 
         if (this.isTokenPresent()) {
@@ -134,13 +138,19 @@ export class Slack {
         }
     }
 
-    private async getToken(): Promise<string> {
-        let token: string = "";
+    private async getWorkspace(): Promise<Workspace> {
+        let workspace: Workspace = {
+            token: '',
+            includedChannels: [],
+            includedUsers: []
+        };
 
-        if (this.token) {
-            token = this.token;
+        if (this.workspace) {
+            workspace = this.workspace;
+        } else if(this.token) {
+            workspace.token = this.token;
         } else if (this.workspaces.length === 1) {
-            token = this.workspaces[0].token;
+            workspace = this.workspaces[0];
         } else {
             await window
                 .showQuickPick(await this.api.getTeams(this.workspaces), {
@@ -149,13 +159,13 @@ export class Slack {
                 })
                 .then(team => {
                     if (!team) {
-                        return;
+                        return {};
                     }
 
-                    token = team.token;
+                    workspace = team.workspace;
                 });
         }
-        return token;
+        return workspace;
     }
 
     private async chooseAction(apiUrl: ApiUrls, data: any): Promise<void> {
@@ -168,7 +178,11 @@ export class Slack {
 
     private async pickChannel(apiUrl: ApiUrls, data: any): Promise<void> {
         window
-            .showQuickPick(await this.api.getChannelList({ token: data.token }), {
+            .showQuickPick(await this.api.getChannelList({
+                token: data.token,
+                includedChannels: data.includedChannels,
+                includedUsers: data.includedUsers
+            }), {
                 matchOnDescription: true,
                 placeHolder: Messages.SelectChannelPlaceHolder
             })
@@ -212,9 +226,9 @@ export class Slack {
             const fileName = filenameWithPath.substring(filenameWithPath.lastIndexOf("\\") + 1);
             const file = fs.createReadStream(filenameWithPath);
             const data = {
-                token: await this.getToken(),
                 filename: fileName,
-                file: file
+                file: file,
+                ...await this.getWorkspace(),
             };
 
             this.chooseAction(ApiUrls.UploadFiles, data);
