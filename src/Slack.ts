@@ -56,10 +56,12 @@ export class Slack {
         return;
       }
 
+      const filename = editor.document.fileName.substring(editor.document.fileName.lastIndexOf("/") + 1);
+
       const data = {
         content: selectedText,
-        filename: editor.document.fileName,
-        filetype: editor.document.fileName.split('.')[1],
+        title: filename,
+        filetype: filename.split('.')[1],
         ...(await this.getWorkspace())
       };
       this.chooseAction(ApiUrls.UploadContentAsFiles, data);

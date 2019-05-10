@@ -54,7 +54,7 @@ export class ApiService {
                 .field("token", data.token)
                 .field("filetype", "auto")
                 .field("channels", data.channel)
-                .field("filename", data.filename)
+                .field("title", data.title)
                 .field("filetype", data.filetype || 'text')
                 .field("content", data.content);
 
