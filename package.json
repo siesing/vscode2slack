@@ -4,11 +4,11 @@
   "icon": "images/logo.png",
   "description": "Post messages, code, files etc. from VSCode to Slack.",
   "version": "1.2.1",
-  "publisher": "benjy3gg",
+  "publisher": "siesing",
   "author": {
-    "name": "Benjamin Kopp",
+    "name": "Fredrik Siesing",
     "email": "fredriksiesing@gmail.com",
-    "url": "https://github.com/benjy3gg/"
+    "url": "https://github.com/siesing/"
   },
   "engines": {
     "vscode": "^1.22.0"
@@ -23,7 +23,7 @@
     "communication",
     "collaboration"
   ],
-  "homepage": "https://github.com/benjy3gg/vscode2slack/blob/master/README.md",
+  "homepage": "https://github.com/siesing/vscode2slack/blob/master/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/siesing/vscode2slack.git"
