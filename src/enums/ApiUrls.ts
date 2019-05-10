@@ -4,6 +4,7 @@ export enum ApiUrls {
     Users = "users.list",
     PostText = "chat.postMessage",
     UploadFiles = "files.upload",
+    UploadContentAsFiles = "files.content",
     SetSnooze = "dnd.setSnooze",
     EndSnooze = "dnd.endSnooze",
     DndInfo = "dnd.info",

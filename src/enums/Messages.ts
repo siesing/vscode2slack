@@ -1,10 +1,12 @@
 export enum Messages {
     SuccessPostMessage = "$(comment-discussion) Message posted!",
     SuccessFileUpload = "$(cloud-upload) File uploaded!",
+    SuccessContentSnippet = "$(cloud-upload) Content Snippet posted!",
     SuccessSetSnooze = "$(clock) Snooze time set!",
     SuccessEndSnooze = "$(clock) Snooze time ended!",
     FailedPostMessage = "$(alert) Post message failed! | Slack Error:",
     FailedFileUpload = "$(alert) File upload failed! | Slack Error: ",
+    FailedContentSnippet = "$(alert) Content snippet post failed! | Slack Error: ",
     FailedSetSnooze = "$(alert) Failed to set snooze time! | Slack Error:",
     FailedEndSnooze = "$(alert) Failed to end snooze time! | Slack Error:",
     InfoSnooze = "$(stop) Please enter an Integer value.",

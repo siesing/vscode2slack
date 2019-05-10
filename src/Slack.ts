@@ -37,6 +37,37 @@ export class Slack {
       });
   }
 
+  public async sendCodeSnippet(): Promise<void> {
+    if (!this.isTokenPresent()) {
+      return;
+    }
+
+    const editor = window.activeTextEditor;
+    if (!editor) {
+      return;
+    }
+
+    const selection = window.activeTextEditor.selection;
+    if (!selection.isEmpty) {
+      const selectedText = editor.document.getText(selection);
+
+      if (selectedText.length > 40000) {
+        this.status.setInfoMessage(Messages.InfoSelectionTooLong);
+        return;
+      }
+
+      const data = {
+        content: selectedText,
+        filename: editor.document.fileName,
+        filetype: editor.document.fileName.split('.')[1],
+        ...(await this.getWorkspace())
+      };
+      this.chooseAction(ApiUrls.UploadContentAsFiles, data);
+    } else {
+      this.status.setInfoMessage(Messages.InfoNoTextSelected);
+    }
+  }
+
   public async sendSelection(): Promise<void> {
     if (!this.isTokenPresent()) {
       return;
@@ -174,7 +205,7 @@ export class Slack {
   }
 
   private async chooseAction(apiUrl: ApiUrls, data: any): Promise<void> {
-    if (apiUrl === ApiUrls.PostText || apiUrl === ApiUrls.UploadFiles) {
+    if (apiUrl === ApiUrls.PostText || apiUrl === ApiUrls.UploadFiles || apiUrl === ApiUrls.UploadContentAsFiles) {
       this.pickChannel(apiUrl, data);
     } else {
       this.post(apiUrl, data);
@@ -211,6 +242,9 @@ export class Slack {
     switch (apiUrl) {
       case ApiUrls.UploadFiles:
         result = await this.api.postFile(apiUrl, data);
+        break;
+      case ApiUrls.UploadContentAsFiles:
+        result = await this.api.postContentAsFile(apiUrl, data);
         break;
       case ApiUrls.PostText:
         result = await this.api.postText(apiUrl, data);
@@ -262,5 +296,5 @@ export class Slack {
     return fileSizeInBytes > 0;
   }
 
-  dispose() {}
+  dispose() { }
 }

@@ -14,6 +14,7 @@ import * as superagent from "superagent";
 
 export class ApiService {
     public async postText(apiUrl: ApiUrls, data: any): Promise<MessageResponse> {
+        console.log('postText');
         try {
             const result = await superagent
                 .post(ApiUrls.BaseUrl + apiUrl)
@@ -37,6 +38,25 @@ export class ApiService {
                 .field("channels", data.channel)
                 .field("filename", data.filename)
                 .attach("file", data.file);
+
+            const response: FileResponse = JSON.parse(result.text);
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    public async postContentAsFile(apiUrl: ApiUrls, data: any): Promise<FileResponse> {
+        apiUrl = ApiUrls.UploadFiles;
+        try {
+            const result = await superagent
+                .post(ApiUrls.BaseUrl + apiUrl)
+                .field("token", data.token)
+                .field("filetype", "auto")
+                .field("channels", data.channel)
+                .field("filename", data.filename)
+                .field("filetype", data.filetype || 'text')
+                .field("content", data.content);
 
             const response: FileResponse = JSON.parse(result.text);
             return response;
@@ -122,7 +142,7 @@ export class ApiService {
             if (users.ok !== false && users.members.length > 0) {
                 const notDeactivatedUsers: any[] = users.members.filter(user => user.deleted !== true);
                 notDeactivatedUsers.forEach(user => {
-                    if(typeof data.includedUsers === 'undefined' || data.includedUsers.indexOf(user.name) > -1) {
+                    if (typeof data.includedUsers === 'undefined' || data.includedUsers.indexOf(user.name) > -1) {
                         channelList.push({
                             id: user.id,
                             label: `@${user.profile.display_name}`,

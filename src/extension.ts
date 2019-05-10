@@ -8,6 +8,7 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerCommand("slack.sendMessage", () => slack.sendMessage()),
         commands.registerCommand("slack.sendSelection", () => slack.sendSelection()),
+        commands.registerCommand("slack.sendCodeSnippet", () => slack.sendCodeSnippet()),
         commands.registerCommand("slack.uploadOpenFile", file => slack.uploadOpenFile(file)),
         commands.registerCommand("slack.uploadSelectedFile", file => slack.uploadSelectedFile(file)),
         commands.registerCommand("slack.setSnooze", () => slack.setSnooze()),
@@ -19,4 +20,4 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(settings);
 }
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

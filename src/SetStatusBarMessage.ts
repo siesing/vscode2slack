@@ -22,6 +22,9 @@ export class SetStatusBarMessage {
                 case ApiUrls.UploadFiles:
                     statusbarMessage = Messages.SuccessFileUpload;
                     break;
+                case ApiUrls.UploadContentAsFiles:
+                    statusbarMessage = Messages.SuccessContentSnippet;
+                    break;
                 case ApiUrls.SetSnooze:
                     statusbarMessage = Messages.SuccessSetSnooze;
                     break;
@@ -42,6 +45,9 @@ export class SetStatusBarMessage {
                     break;
                 case ApiUrls.UploadFiles:
                     statusbarMessage = Messages.FailedFileUpload + " " + result.error;
+                    break;
+                case ApiUrls.UploadContentAsFiles:
+                    statusbarMessage = Messages.FailedContentSnippet + " " + result.error;
                     break;
                 case ApiUrls.SetSnooze:
                     statusbarMessage = Messages.FailedSetSnooze + " " + result.error;

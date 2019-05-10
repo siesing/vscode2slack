@@ -4,11 +4,11 @@
   "icon": "images/logo.png",
   "description": "Post messages, code, files etc. from VSCode to Slack.",
   "version": "1.2.1",
-  "publisher": "siesing",
+  "publisher": "benjy3gg",
   "author": {
-    "name": "Fredrik Siesing",
+    "name": "Benjamin Kopp",
     "email": "fredriksiesing@gmail.com",
-    "url": "https://github.com/siesing/"
+    "url": "https://github.com/benjy3gg/"
   },
   "engines": {
     "vscode": "^1.22.0"
@@ -23,7 +23,7 @@
     "communication",
     "collaboration"
   ],
-  "homepage": "https://github.com/siesing/vscode2slack/blob/master/README.md",
+  "homepage": "https://github.com/benjy3gg/vscode2slack/blob/master/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/siesing/vscode2slack.git"
@@ -34,6 +34,7 @@
   "activationEvents": [
     "onCommand:slack.sendMessage",
     "onCommand:slack.sendSelection",
+    "onCommand:slack.sendCodeSnippet",
     "onCommand:slack.uploadFilePath",
     "onCommand:slack.uploadOpenFile",
     "onCommand:slack.uploadSelectedFile",
@@ -58,6 +59,11 @@
           "group": "navigation"
         },
         {
+          "when": "editorHasSelection",
+          "command": "slack.sendCodeSnippet",
+          "group": "navigation"
+        },
+        {
           "when": "editorTextFocus",
           "command": "slack.uploadOpenFile",
           "group": "navigation"
@@ -75,6 +81,10 @@
         {
           "when": "config.noExist",
           "command": "slack.sendSelection"
+        },
+        {
+          "when": "config.noExist",
+          "command": "slack.sendCodeSnippet"
         }
       ]
     },
@@ -86,6 +96,10 @@
       {
         "command": "slack.sendSelection",
         "title": "Slack: Post Selected Text"
+      },
+      {
+        "command": "slack.sendCodeSnippet",
+        "title": "Slack: Post Selected Text As Snippet"
       },
       {
         "command": "slack.uploadOpenFile",
@@ -119,6 +133,12 @@
         "command": "slack.sendSelection",
         "key": "ctrl+u s",
         "mac": "cmd+u s"
+      },
+      {
+        "when": "editorHasSelection",
+        "command": "slack.sendCodeSnippet",
+        "key": "ctrl+u c",
+        "mac": "cmd+u c"
       },
       {
         "command": "slack.setSnooze",
